@@ -12,10 +12,10 @@ Features and Functionality:
   - [x] Students can upload their work to the platform
 - [x] Peer review:
   - [x] Students are assigned to review the work of their peers
+  - [x] Choose between anonymous or with name attached
 - [x] Feedback and grading:
   - [x] Students can provide feedback and grades to their peers
   - [x] Use a rubric or criteria specified by the teacher
-  - [ ] Choose between anonymous or with name attached
 - [ ] Analytics and reporting:
   - [ ] Teachers can view analytics and reports on student participation
   - [ ] Feedback quality

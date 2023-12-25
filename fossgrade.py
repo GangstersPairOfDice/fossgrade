@@ -7,19 +7,21 @@ class EvaluationCriterion:
     self.description = description
 
 class Assignment:
-    def __init__(self, title, description, deadline, evaluation_criteria):
+    def __init__(self, title, description, deadline, evaluation_criteria, anonymity):
         self.title = title
         self.description = description
         self.deadline = deadline
         self.evaluation_criteria = [EvaluationCriterion(criterion['title'], criterion['description']) for criterion in evaluation_criteria]
         self.submissions = []
+        self.anonymity = anonymity
 
     def upload_submission(self, student, file):
         submission = {
             'student': student,
             'file': file,
             'feedback': [],
-            'grade': None
+            'grade': None,
+            'reviewer': None
         }
         self.submissions.append(submission)
 
@@ -34,13 +36,18 @@ class Assignment:
 
     def provide_peer_feedback(self, evaluation_criteria):
         for submission in self.submissions:
-            reviewer = submission['reviewer']
-            print(f"{reviewer}, please provide feedback and grade {submission['student']}'s work based on the following criteria:")
+            if self.anonymity == True:
+                student = "Anonymous"
+                reviewer = "Anonymous"
+            else:
+                student = submission['student']
+                reviewer = submission['reviewer']
+            print(f"{reviewer}, please provide feedback and grade {student}'s work based on the following criteria:")
             for criterion in evaluation_criteria:
                 print(f"- {criterion['title']}")
             feedback = {}
             for criterion in evaluation_criteria:
-                feedback[criterion['title']] = int(input(f"{reviewer}, please provide a score for {submission['student']}'s work on {criterion['title']}: "))
+                feedback[criterion['title']] = int(input(f"{reviewer}, please provide a score for {student}'s work on {criterion['title']}: "))
             grade = sum(feedback.values())
             submission['feedback'].append({'reviewer': reviewer, 'feedback': feedback, 'grade': grade})
 
@@ -72,7 +79,7 @@ evaluation_criteria = [
     {"title": "Use of Sources", "description": "The appropriate use of sources and references."}
 ]
 
-assignment = Assignment("Intro to Swaggery Assignment #1", "Write a short essay about Swag in modern society", "2024-01-01", evaluation_criteria)
+assignment = Assignment("Intro to Swaggery Assignment #1", "Write a short essay about Swag in modern society", "2024-01-01", evaluation_criteria, anonymity=True)
 assignment.display_details()
 
 
@@ -83,7 +90,10 @@ assignment.assign_peer_reviews()
 assignment.provide_peer_feedback(evaluation_criteria)
 
 for submission in assignment.submissions:
-    print(f"{submission['student']} will review {submission['reviewer']}'s work.")
+    #print(f"{submission['student']} will review {submission['reviewer']}'s work.")
     print(f"{submission['student']}'s work received the following feedback:")
     for review in submission['feedback']:
-        print(f"- {review['reviewer']}: {review['feedback']} (Grade: {review['grade']})")
+        if review['reviewer'] == "Anonymous":
+            print(f"- {review['reviewer']}: {review['feedback']} (Grade: {review['grade']})")
+        else:
+            print(f"- {review['reviewer']}: {review['feedback']} (Grade: {review['grade']})")
