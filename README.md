@@ -8,9 +8,8 @@ Features and Functionality:
   - [x] Teachers can create assignments
   - [x] Set deadlines
   - [x] Specify criteria for evaluation
-- [ ] Student uploads:
-  - [ ] Students can upload their work to the platform
-  - [ ] Choose between file or external resource
+- [x] Student uploads:
+  - [x] Students can upload their work to the platform
 - [ ] Peer review:
   - [ ] Students are assigned to review the work of their peers
   - [ ] Use a rubric or criteria specified by the teacher

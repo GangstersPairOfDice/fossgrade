@@ -1,3 +1,5 @@
+import os
+
 class EvaluationCriterion:
   def __init__(self, title, description):
     self.title = title
@@ -11,7 +13,7 @@ class Assignment:
         self.evaluation_criteria = [EvaluationCriterion(criteria['title'], criteria['description']) for criteria in evaluation_criteria]
         self.submissions = []
 
-    def add_submission(self, student, file):
+    def upload_submission(self, student, file):
         submission = {
             'student': student,
             'file': file,
@@ -19,6 +21,16 @@ class Assignment:
             'grade': None
         }
         self.submissions.append(submission)
+
+    def _save_file(self, file_path):
+        if not os.path.exists('submissions'):
+            os.makedirs('submissions')
+        file_name = os.path.basename(file_path)
+        new_file_path = os.path.join('submissions', file_name)
+        with open(new_file_path, 'wb') as f:
+            with open(file_path, 'rb') as g:
+                f.write(g.read())
+        return new_file_path
 
     def display_details(self):
         print(f"Title: {self.title}")
@@ -30,6 +42,7 @@ class Assignment:
 
 
 # Example usage:
+
 evaluation_criteria = [
     {"title": "Originality", "description": "The extent to which the work is original and creative."},
     {"title": "Clarity", "description": "The clarity and coherence of the work."},
@@ -38,5 +51,5 @@ evaluation_criteria = [
 ]
 
 assignment = Assignment("Intro to Swaggery Assignment #1", "Write a short essay about Swag in modern society", "2024-01-01", evaluation_criteria)
-assignment.add_submission("John Doe", "https://example.com/johndoe_essay.pdf")
+assignment.add_submission("John Doe", "/path/to/johndoe_essay.pdf")
 assignment.display_details()
