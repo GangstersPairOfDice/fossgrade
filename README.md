@@ -5,9 +5,9 @@ Sure, here is the updated markdown checklist with sub-checklists:
 Features and Functionality:
 
 - [ ] Assignment creation:
-  - [ ] Teachers can create assignments
-  - [ ] Set deadlines
-  - [ ] Specify criteria for evaluation
+  - [x] Teachers can create assignments
+  - [x] Set deadlines
+  - [x] Specify criteria for evaluation
 - [ ] Student uploads:
   - [ ] Students can upload their work to the platform
   - [ ] Choose between file or external resource
