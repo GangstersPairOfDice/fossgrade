@@ -11,7 +11,7 @@ class Assignment:
         self.title = title
         self.description = description
         self.deadline = deadline
-        self.evaluation_criteria = [EvaluationCriterion(criteria['title'], criteria['description']) for criteria in evaluation_criteria]
+        self.evaluation_criteria = [EvaluationCriterion(criterion['title'], criterion['description']) for criterion in evaluation_criteria]
         self.submissions = []
 
     def upload_submission(self, student, file):
@@ -29,8 +29,20 @@ class Assignment:
             return
 
         for submission in self.submissions:
-            reviewer = random.choice([s for s in self.submissions if s != submission]['student'])
+            reviewer = random.choice([s['student'] for s in self.submissions if s != submission])
             submission['reviewer'] = reviewer
+
+    def provide_peer_feedback(self, evaluation_criteria):
+        for submission in self.submissions:
+            reviewer = submission['reviewer']
+            print(f"{reviewer}, please provide feedback and grade {submission['student']}'s work based on the following criteria:")
+            for criterion in evaluation_criteria:
+                print(f"- {criterion['title']}")
+            feedback = {}
+            for criterion in evaluation_criteria:
+                feedback[criterion['title']] = int(input(f"{reviewer}, please provide a score for {submission['student']}'s work on {criterion['title']}: "))
+            grade = sum(feedback.values())
+            submission['feedback'].append({'reviewer': reviewer, 'feedback': feedback, 'grade': grade})
 
     def _save_file(self, file_path):
         if not os.path.exists('submissions'):
@@ -64,9 +76,14 @@ assignment = Assignment("Intro to Swaggery Assignment #1", "Write a short essay 
 assignment.display_details()
 
 
-assignment.add_submission("John Doe", "/path/to/johndoe_essay.pdf")
+assignment.upload_submission("John Doe", "pdf1")
+assignment.upload_submission("John Doe2", "pdf2")
 
 assignment.assign_peer_reviews()
+assignment.provide_peer_feedback(evaluation_criteria)
 
 for submission in assignment.submissions:
     print(f"{submission['student']} will review {submission['reviewer']}'s work.")
+    print(f"{submission['student']}'s work received the following feedback:")
+    for review in submission['feedback']:
+        print(f"- {review['reviewer']}: {review['feedback']} (Grade: {review['grade']})")
