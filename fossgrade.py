@@ -72,6 +72,7 @@ class Assignment:
 
 # Example usage:
 
+# Create evaluation criteria
 evaluation_criteria = [
     {"title": "Originality", "description": "The extent to which the work is original and creative."},
     {"title": "Clarity", "description": "The clarity and coherence of the work."},
@@ -79,13 +80,22 @@ evaluation_criteria = [
     {"title": "Use of Sources", "description": "The appropriate use of sources and references."}
 ]
 
-assignment = Assignment("Intro to Swaggery Assignment #1", "Write a short essay about Swag in modern society", "2024-01-01", evaluation_criteria, anonymity=True)
-assignment.display_details()
+# Create assignment
+assignment = Assignment(
+    title='Research Paper',
+    description='Write a 10-page research paper on a topic of your choice.',
+    deadline='2023-05-01',
+    evaluation_criteria=evaluation_criteria,
+    anonymity=True
+)
 
+assignment.display_details() # display assignment details
 
+# Upload submissions
 assignment.upload_submission("John Doe", "pdf1")
 assignment.upload_submission("John Doe2", "pdf2")
 
+# Assign peer reviews
 assignment.assign_peer_reviews()
 assignment.provide_peer_feedback(evaluation_criteria)
 
