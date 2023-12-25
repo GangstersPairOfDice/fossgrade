@@ -10,8 +10,8 @@ Features and Functionality:
   - [x] Specify criteria for evaluation
 - [x] Student uploads:
   - [x] Students can upload their work to the platform
-- [ ] Peer review:
-  - [ ] Students are assigned to review the work of their peers
+- [x] Peer review:
+  - [x] Students are assigned to review the work of their peers
   - [ ] Use a rubric or criteria specified by the teacher
 - [ ] Feedback and grading:
   - [ ] Students can provide feedback and grades to their peers

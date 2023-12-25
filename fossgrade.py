@@ -1,4 +1,5 @@
 import os
+import random
 
 class EvaluationCriterion:
   def __init__(self, title, description):
@@ -21,6 +22,15 @@ class Assignment:
             'grade': None
         }
         self.submissions.append(submission)
+
+    def assign_peer_reviews(self):
+        if len(self.submissions) < 2:
+            print("Not enough submissions to assign peer reviews.")
+            return
+
+        for submission in self.submissions:
+            reviewer = random.choice([s for s in self.submissions if s != submission]['student'])
+            submission['reviewer'] = reviewer
 
     def _save_file(self, file_path):
         if not os.path.exists('submissions'):
@@ -51,5 +61,12 @@ evaluation_criteria = [
 ]
 
 assignment = Assignment("Intro to Swaggery Assignment #1", "Write a short essay about Swag in modern society", "2024-01-01", evaluation_criteria)
-assignment.add_submission("John Doe", "/path/to/johndoe_essay.pdf")
 assignment.display_details()
+
+
+assignment.add_submission("John Doe", "/path/to/johndoe_essay.pdf")
+
+assignment.assign_peer_reviews()
+
+for submission in assignment.submissions:
+    print(f"{submission['student']} will review {submission['reviewer']}'s work.")
