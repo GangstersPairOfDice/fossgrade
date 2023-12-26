@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create Assignment</title>
+  </head>
+  <body>
+    <h1>Create Assignment</h1>
+    <form method="POST" action="{{ url_for('create_assignment') }}">
+      <h3>
+        <label for="title">Title:</label>
+        <input type="text" name="title" required />
+      </h3>
+
+      <h3>
+        <label for="description">Description:</label><br />
+        <textarea name="description" required></textarea>
+      </h3>
+      <br />
+
+      <h3>
+        <label for="deadline">Deadline:</label>
+        <input type="date" name="deadline" required />
+      </h3>
+      <br />
+      <h3>
+        <label for="criteria">Evaluation Criteria:</label>
+        <br />
+        <div id="criteria-container">
+          <div class="criteria-item">
+            <input
+              type="text"
+              name="criteria[1][title]"
+              placeholder="Criteria Title"
+              required
+            />
+            <textarea
+              name="criteria[1][description]"
+              placeholder="Criteria Description"
+              required
+            ></textarea>
+          </div>
+        </div>
+        <button type="button" class="add-criteria">Add Criteria</button>
+      </h3>
+      <br />
+      <h3>
+        <label for="anonymity">Enable Anonymity:</label>
+        <input type="checkbox" name="anonymity" />
+      </h3>
+      <br />
+
+      <input type="submit" value="Create Assignment" />
+    </form>
+
+    <script>
+      // Add Criteria button functionality
+      document
+        .querySelector(".add-criteria")
+        .addEventListener("click", function () {
+          var container = document.getElementById("criteria-container");
+          var index = container.childElementCount;
+          var item = document.createElement("div");
+          item.className = "criteria-item";
+          item.innerHTML = `
+            <input type="text" name="criteria[${index}][title]" required>
+            <textarea name="criteria[${index}][description]" required></textarea>
+            <button type="button" class="remove-criteria">Remove Criteria</button>
+          `;
+          container.appendChild(item);
+
+          // Remove Criteria button functionality
+          var removeButtons = item.querySelectorAll(".remove-criteria");
+          removeButtons.forEach(function (button) {
+            button.addEventListener("click", function () {
+              var item = this.parentNode;
+              item.parentNode.removeChild(item);
+            });
+          });
+        });
+    </script>
+  </body>
+</html>

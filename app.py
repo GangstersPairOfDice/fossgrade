@@ -1,3 +1,6 @@
+from flask import Flask, render_template, request
+from datetime import datetime
+
 import os
 import random
 
@@ -11,7 +14,7 @@ class Assignment:
         self.title = title
         self.description = description
         self.deadline = deadline
-        self.evaluation_criteria = [EvaluationCriterion(criterion['title'], criterion['description']) for criterion in evaluation_criteria]
+        self.evaluation_criteria = [EvaluationCriterion(criteria['title'], criteria['description']) for criteria in evaluation_criteria]
         self.submissions = []
         self.anonymity = anonymity
 
@@ -69,17 +72,18 @@ class Assignment:
         for criteria in self.evaluation_criteria:
             print(f"- {criteria.title}: {criteria.description}")
 
-
+'''
 # Example usage:
 
 # Create evaluation criteria
+'''
 evaluation_criteria = [
     {"title": "Originality", "description": "The extent to which the work is original and creative."},
     {"title": "Clarity", "description": "The clarity and coherence of the work."},
     {"title": "Grammar and Spelling", "description": "The correctness of grammar, spelling, and punctuation."},
     {"title": "Use of Sources", "description": "The appropriate use of sources and references."}
 ]
-
+'''
 # Create assignment
 assignment = Assignment(
     title='Research Paper',
@@ -107,3 +111,42 @@ for submission in assignment.submissions:
             print(f"- {review['reviewer']}: {review['feedback']} (Grade: {review['grade']})")
         else:
             print(f"- {review['reviewer']}: {review['feedback']} (Grade: {review['grade']})")
+'''
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/create_assignment', methods=['GET', 'POST'])
+def create_assignment():
+    if request.method == 'POST':
+        # Get the input data
+        title = request.form['title']
+        description = request.form['description']
+        deadline = request.form['deadline']
+        deadline = datetime.strptime(deadline, '%Y-%m-%d')
+
+        # Convert evaluation criteria list to dictionaries
+        evaluation_criteria = [
+            {"title": test, "description": test}
+            for test in request.form.getlist('criteria[]')
+            ]
+
+        print(evaluation_criteria)
+
+        anonymity = request.form.get('anonymity')
+
+        # Create Assignment object here using the input data
+        assignment = Assignment(title, description, deadline, evaluation_criteria, anonymity)
+        assignment.display_details()
+
+        # Save the assignment object to a file or database here
+
+        return render_template('display_assignment.html', assignment=assignment)
+
+    return render_template('create_assignment.html')
+
+if __name__ == '__main__':
+    app.run(debug=True)

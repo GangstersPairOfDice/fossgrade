@@ -38,10 +38,10 @@ User Interface Features:
   - [ ] Provides an overview of upcoming assignments
   - [ ] Recent activity
   - [ ] Analytics
-- [ ] Assignment creation page:
-  - [ ] Teachers can create assignments
+- [x] Assignment creation page:
+  - [x] Teachers can create assignments
   - [ ] Specify criteria for evaluation
-  - [ ] Set deadlines
+  - [x] Set deadlines
 - [ ] Student upload page:
   - [ ] Students can upload their work
   - [ ] View instructions

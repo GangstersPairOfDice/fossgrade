@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Assignment Details</title>
+  </head>
+  <body>
+    <h1><u>{{ assignment.title }}</u></h1>
+    <h3>Description:</h2>
+      <p>{{ assignment.description }}</p>
+    
+    <h3>Evaluation Criteria:</h2>
+    <ul>
+      {% for criteria in assignment.evaluation_criteria %}
+      <li>{{criteria}}</li>
+      {% endfor %}
+    </ul>
+
+    <h3>Deadline: {{ assignment.deadline }}</h3>
+
+    <h3>Submissions:</h2>
+    <ul>
+      {% for submission in assignment.submissions %}
+      <li>{{ submission }}</li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
