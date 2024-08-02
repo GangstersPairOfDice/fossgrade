@@ -1,7 +1,5 @@
 # fossgrade - open sourced peer grading
 
-Sure, here is the updated markdown checklist with sub-checklists:
-
 Features and Functionality:
 
 - [x] Assignment creation:
